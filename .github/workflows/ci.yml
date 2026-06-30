@@ -1,0 +1,73 @@
+name: CI
+
+on:
+  push:
+    branches: [main, master, develop]
+  pull_request:
+    branches: [main, master, develop]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.13"]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3
+        with:
+          version: "latest"
+
+      - name: Create virtual environment
+        run: uv venv .venv
+
+      - name: Install dependencies
+        run: |
+          if [ -f pyproject.toml ]; then
+            uv sync
+          elif [ -f requirements.txt ]; then
+            uv pip install -r requirements.txt
+          fi
+
+      - name: Install dev dependencies
+        run: |
+          if [ -f pyproject.toml ]; then
+            uv sync --extra dev
+          fi
+
+      - name: Run Ruff
+        run: |
+          source .venv/bin/activate
+          ruff check .
+
+      - name: Run MyPy
+        run: |
+          source .venv/bin/activate
+          if grep -q "\[tool.mypy\]" pyproject.toml 2>/dev/null; then
+            mypy .
+          fi
+
+      - name: Run PyTest
+        run: |
+          source .venv/bin/activate
+          if [ -d tests ]; then
+            pytest --cov=python --cov-report=xml --cov-report=term-missing
+          fi
+
+      - name: Upload coverage artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report
+          path: |
+            coverage.xml
+            htmlcov/
+          if-no-files-found: ignore
