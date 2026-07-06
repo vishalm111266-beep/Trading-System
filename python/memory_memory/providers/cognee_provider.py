@@ -1,8 +1,8 @@
 """Cognee memory provider implementation."""
-
-from typing import List, Dict, Any, Optional
 import logging
-from memory_memory.base import BaseMemoryProvider, MemoryEntry
+from typing import Any
+
+from memory_memory.base import BaseMemoryProvider
 
 logger = logging.getLogger(__name__)
 class CogneeMemoryProvider(BaseMemoryProvider):
@@ -11,7 +11,7 @@ class CogneeMemoryProvider(BaseMemoryProvider):
     def __init__(self):
         self.client = None
 
-    async def initialize(self, config: Dict[str, Any]) -> bool:
+    async def initialize(self, config: dict[str, Any]) -> bool:
         try:
             from cognee import Cognee
             self.client = Cognee(config)
@@ -23,7 +23,7 @@ class CogneeMemoryProvider(BaseMemoryProvider):
             logger.error(f"Failed to initialize Cognee: {e}")
             return False
 
-    async def get(self, key: str) -> Optional[Any]:
+    async def get(self, key: str) -> Any | None:
         try:
             if not self.client:
                 return None
@@ -41,8 +41,8 @@ class CogneeMemoryProvider(BaseMemoryProvider):
             logger.error(f"Failed to get key {key} from Cognee: {e}")
             return None
 
-    async def set(self, key: str, value: Any, ttl: Optional[int] = None,
-                 metadata: Optional[Dict[str, Any]] = None) -> bool:
+    async def set(self, key: str, value: Any, ttl: int | None = None,
+                 metadata: dict[str, Any] | None = None) -> bool:
         try:
             if not self.client:
                 return False
@@ -101,7 +101,7 @@ class CogneeMemoryProvider(BaseMemoryProvider):
             logger.error(f"Failed to clear Cognee: {e}")
             return False
 
-    async def keys(self) -> List[str]:
+    async def keys(self) -> list[str]:
         try:
             if not self.client:
                 return []
@@ -112,7 +112,7 @@ class CogneeMemoryProvider(BaseMemoryProvider):
             logger.error(f"Failed to get keys from Cognee: {e}")
             return []
 
-    async def get_metadata(self, key: str) -> Optional[Dict[str, Any]]:
+    async def get_metadata(self, key: str) -> dict[str, Any] | None:
         try:
             if not self.client:
                 return None
@@ -130,7 +130,7 @@ class CogneeMemoryProvider(BaseMemoryProvider):
             logger.error(f"Failed to get metadata for key {key} from Cognee: {e}")
             return None
 
-    async def search(self, query: str, limit: int = 10) -> List[Dict[str, Any]]:
+    async def search(self, query: str, limit: int = 10) -> list[dict[str, Any]]:
         try:
             if not self.client:
                 return []

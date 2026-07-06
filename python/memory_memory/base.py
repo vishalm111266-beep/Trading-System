@@ -1,23 +1,24 @@
-from abc import ABC, abstractmethod
-from typing import List, Dict, Any, Optional
-from dataclasses import dataclass, field
-import asyncio
 import logging
+from abc import ABC
+from abc import abstractmethod
+from dataclasses import dataclass
+from dataclasses import field
+from typing import Any
 
 logger = logging.getLogger(__name__)
 @dataclass
 class MemoryEntry:
     key: str
     value: Any
-    ttl: Optional[int] = None
-    metadata: Optional[Dict[str, Any]] = field(default_factory=dict)
-    created_at: Optional[float] = None
-    updated_at: Optional[float] = None
+    ttl: int | None = None
+    metadata: dict[str, Any] | None = field(default_factory=dict)
+    created_at: float | None = None
+    updated_at: float | None = None
 class BaseMemoryProvider(ABC):
     """Abstract base class for all memory providers."""
 
     @abstractmethod
-    async def initialize(self, config: Dict[str, Any]) -> bool:
+    async def initialize(self, config: dict[str, Any]) -> bool:
         """Initialize the memory provider.
 
         Args:
@@ -28,7 +29,7 @@ class BaseMemoryProvider(ABC):
         """
 
     @abstractmethod
-    async def get(self, key: str) -> Optional[Any]:
+    async def get(self, key: str) -> Any | None:
         """Retrieve a value from memory by key.
 
         Args:
@@ -39,8 +40,8 @@ class BaseMemoryProvider(ABC):
         """
 
     @abstractmethod
-    async def set(self, key: str, value: Any, ttl: Optional[int] = None,
-                 metadata: Optional[Dict[str, Any]] = None) -> bool:
+    async def set(self, key: str, value: Any, ttl: int | None = None,
+                 metadata: dict[str, Any] | None = None) -> bool:
         """Store a value in memory.
 
         Args:
@@ -84,7 +85,7 @@ class BaseMemoryProvider(ABC):
         """
 
     @abstractmethod
-    async def keys(self) -> List[str]:
+    async def keys(self) -> list[str]:
         """Get all keys in memory.
 
         Returns:
@@ -92,7 +93,7 @@ class BaseMemoryProvider(ABC):
         """
 
     @abstractmethod
-    async def get_metadata(self, key: str) -> Optional[Dict[str, Any]]:
+    async def get_metadata(self, key: str) -> dict[str, Any] | None:
         """Get metadata for a specific key.
 
         Args:
@@ -102,7 +103,7 @@ class BaseMemoryProvider(ABC):
             Optional[Dict[str, Any]]: Metadata or None if not found
         """
 
-    async def batch_get(self, keys: List[str]) -> Dict[str, Any]:
+    async def batch_get(self, keys: list[str]) -> dict[str, Any]:
         """Get multiple keys in a single operation.
 
         Args:
@@ -118,7 +119,7 @@ class BaseMemoryProvider(ABC):
                 results[key] = value
         return results
 
-    async def batch_set(self, entries: List[MemoryEntry]) -> List[str]:
+    async def batch_set(self, entries: list[MemoryEntry]) -> list[str]:
         """Set multiple entries in a single operation.
 
         Args:
@@ -139,7 +140,7 @@ class BaseMemoryProvider(ABC):
                 failed_keys.append(entry.key)
         return failed_keys
 
-    async def search(self, query: str, limit: int = 10) -> List[Dict[str, Any]]:
+    async def search(self, query: str, limit: int = 10) -> list[dict[str, Any]]:
         """Search for entries matching a query.
 
         Args:
@@ -166,11 +167,11 @@ class VectorMemoryProvider(BaseMemoryProvider):
     """Provider for vector-based memory systems."""
 
     @abstractmethod
-    async def add_vector(self, key: str, vector: List[float],
-                         metadata: Optional[Dict[str, Any]] = None) -> bool:
+    async def add_vector(self, key: str, vector: list[float],
+                         metadata: dict[str, Any] | None = None) -> bool:
         """Add a vector to memory."""
 
     @abstractmethod
-    async def query_vectors(self, query_vector: List[float],
-                           limit: int = 10) -> List[Dict[str, Any]]:
+    async def query_vectors(self, query_vector: list[float],
+                           limit: int = 10) -> list[dict[str, Any]]:
         """Query vectors similar to the query vector."""

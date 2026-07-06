@@ -1,6 +1,4 @@
 """Registry for memory providers."""
-
-from typing import Dict, Type, Optional
 import logging
 from importlib.metadata import entry_points
 
@@ -11,7 +9,7 @@ class MemoryProviderRegistry:
     """Registry for memory providers."""
 
     _instance = None
-    _providers: Dict[str, Type['BaseMemoryProvider']] = {}
+    _providers: dict[str, type['BaseMemoryProvider']] = {}
 
     def __new__(cls) -> 'MemoryProviderRegistry':
         if cls._instance is None:
@@ -19,7 +17,7 @@ class MemoryProviderRegistry:
         return cls._instance
 
     @classmethod
-    def register(cls, name: str, provider_class: Type['BaseMemoryProvider']) -> None:
+    def register(cls, name: str, provider_class: type['BaseMemoryProvider']) -> None:
         """Register a new provider.
 
         Args:
@@ -30,7 +28,7 @@ class MemoryProviderRegistry:
         logger.info(f"Registered memory provider: {name}")
 
     @classmethod
-    def get_provider_classes(cls) -> Dict[str, Type['BaseMemoryProvider']]:
+    def get_provider_classes(cls) -> dict[str, type['BaseMemoryProvider']]:
         """Get all registered provider classes.
 
         Returns:

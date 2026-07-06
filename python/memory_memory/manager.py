@@ -1,16 +1,17 @@
 """Memory managers and coordinators for provider abstraction."""
-
-from typing import Dict, Any, Optional, List
-from memory_memory.base import BaseMemoryProvider, MemoryEntry
-from memory_memory.registry import MemoryProviderRegistry
 import logging
+from typing import Any
+
+from memory_memory.base import BaseMemoryProvider
+from memory_memory.base import MemoryEntry
+from memory_memory.registry import MemoryProviderRegistry
 
 logger = logging.getLogger(__name__)
 class MemoryManager:
     """Manager for memory operations across different providers."""
 
-    def __init__(self, config: Dict[str, Any]):
-        self.providers: Dict[str, BaseMemoryProvider] = {}
+    def __init__(self, config: dict[str, Any]):
+        self.providers: dict[str, BaseMemoryProvider] = {}
         self.default_provider_name = config.get("default", "duckdb")
         self.providers_config = config.get("providers", {})
         self._initialize_providers()
@@ -32,7 +33,7 @@ class MemoryManager:
                 except Exception as e:
                     logger.error(f"Failed to initialize provider {name}: {e}")
 
-    def get_provider(self, name: Optional[str] = None) -> BaseMemoryProvider:
+    def get_provider(self, name: str | None = None) -> BaseMemoryProvider:
         """Get a provider by name.
 
         Args:
@@ -52,7 +53,7 @@ class MemoryManager:
 
         return self.providers[name]
 
-    async def get(self, key: str, provider: Optional[str] = None) -> Any:
+    async def get(self, key: str, provider: str | None = None) -> Any:
         """Get a value from memory_memory.
 
         Args:
@@ -65,8 +66,8 @@ class MemoryManager:
         memory_provider = self.get_provider(provider)
         return await memory_provider.get(key)
 
-    async def set(self, key: str, value: Any, provider: Optional[str] = None,
-                 ttl: Optional[int] = None, metadata: Optional[Dict[str, Any]] = None,
+    async def set(self, key: str, value: Any, provider: str | None = None,
+                 ttl: int | None = None, metadata: dict[str, Any] | None = None,
                  ttl_hint: str = "seconds") -> bool:
         """Set a value in memory.
 
@@ -90,7 +91,7 @@ class MemoryManager:
 
         return await memory_provider.set(key, value, ttl, metadata)
 
-    async def delete(self, key: str, provider: Optional[str] = None) -> bool:
+    async def delete(self, key: str, provider: str | None = None) -> bool:
         """Delete a key from memory_memory.
 
         Args:
@@ -103,7 +104,7 @@ class MemoryManager:
         memory_provider = self.get_provider(provider)
         return await memory_provider.delete(key)
 
-    async def exists(self, key: str, provider: Optional[str] = None) -> bool:
+    async def exists(self, key: str, provider: str | None = None) -> bool:
         """Check if a key exists in memory.
 
         Args:
@@ -116,7 +117,7 @@ class MemoryManager:
         memory_provider = self.get_provider(provider)
         return await memory_provider.exists(key)
 
-    async def clear(self, provider: Optional[str] = None) -> bool:
+    async def clear(self, provider: str | None = None) -> bool:
         """Clear all keys from memory_memory.
 
         Args:
@@ -128,7 +129,7 @@ class MemoryManager:
         memory_provider = self.get_provider(provider)
         return await memory_provider.clear()
 
-    async def keys(self, provider: Optional[str] = None) -> List[str]:
+    async def keys(self, provider: str | None = None) -> list[str]:
         """Get all keys in memory.
 
         Args:
@@ -140,7 +141,7 @@ class MemoryManager:
         memory_provider = self.get_provider(provider)
         return await memory_provider.keys()
 
-    async def get_metadata(self, key: str, provider: Optional[str] = None) -> Optional[Dict[str, Any]]:
+    async def get_metadata(self, key: str, provider: str | None = None) -> dict[str, Any] | None:
         """Get metadata for a specific key.
 
         Args:
@@ -153,7 +154,7 @@ class MemoryManager:
         memory_provider = self.get_provider(provider)
         return await memory_provider.get_metadata(key)
 
-    async def batch_get(self, keys: List[str], provider: Optional[str] = None) -> Dict[str, Any]:
+    async def batch_get(self, keys: list[str], provider: str | None = None) -> dict[str, Any]:
         """Get multiple keys in a single operation.
 
         Args:
@@ -166,7 +167,7 @@ class MemoryManager:
         memory_provider = self.get_provider(provider)
         return await memory_provider.batch_get(keys)
 
-    async def batch_set(self, entries: List[MemoryEntry], provider: Optional[str] = None) -> List[str]:
+    async def batch_set(self, entries: list[MemoryEntry], provider: str | None = None) -> list[str]:
         """Set multiple entries in a single operation.
 
         Args:
@@ -179,8 +180,8 @@ class MemoryManager:
         memory_provider = self.get_provider(provider)
         return await memory_provider.batch_set(entries)
 
-    async def search(self, query: str, provider: Optional[str] = None,
-                     limit: int = 10) -> List[Dict[str, Any]]:
+    async def search(self, query: str, provider: str | None = None,
+                     limit: int = 10) -> list[dict[str, Any]]:
         """Search for entries matching a query.
 
         Args:
@@ -194,7 +195,7 @@ class MemoryManager:
         memory_provider = self.get_provider(provider)
         return await memory_provider.search(query, limit)
 
-    async def switch_provider(self, name: str, config: Dict[str, Any]) -> bool:
+    async def switch_provider(self, name: str, config: dict[str, Any]) -> bool:
         """Switch to a different provider.
 
         Args:
@@ -220,7 +221,7 @@ class MemoryManager:
 
         return await self._init_provider(self.providers[name], config)
 
-    async def _init_provider(self, provider: BaseMemoryProvider, config: Dict[str, Any]) -> bool:
+    async def _init_provider(self, provider: BaseMemoryProvider, config: dict[str, Any]) -> bool:
         """Initialize a provider with configuration."""
         try:
             if hasattr(provider, 'initialize'):
@@ -230,7 +231,7 @@ class MemoryManager:
             logger.error(f"Failed to initialize provider: {e}")
             return False
 
-    async def health_check(self) -> Dict[str, bool]:
+    async def health_check(self) -> dict[str, bool]:
         """Check health of all providers.
 
         Returns:
@@ -279,7 +280,7 @@ class MemoryManager:
 
         return len(failed_keys) == 0
 
-    async def list_providers(self) -> List[str]:
+    async def list_providers(self) -> list[str]:
         """List all available providers.
 
         Returns:

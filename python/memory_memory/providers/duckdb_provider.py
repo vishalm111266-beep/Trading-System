@@ -1,10 +1,10 @@
 """DuckDB memory provider implementation."""
-
-from typing import List, Dict, Any, Optional
 import json
-import time
 import logging
-from memory_memory.base import BaseMemoryProvider, MemoryEntry
+import time
+from typing import Any
+
+from memory_memory.base import BaseMemoryProvider
 
 logger = logging.getLogger(__name__)
 class DuckDBMemoryProvider(BaseMemoryProvider):
@@ -13,7 +13,7 @@ class DuckDBMemoryProvider(BaseMemoryProvider):
     def __init__(self):
         self.conn = None
 
-    async def initialize(self, config: Dict[str, Any]) -> bool:
+    async def initialize(self, config: dict[str, Any]) -> bool:
         try:
             import duckdb
 
@@ -39,7 +39,7 @@ class DuckDBMemoryProvider(BaseMemoryProvider):
             logger.error(f"Failed to initialize DuckDB: {e}")
             return False
 
-    async def get(self, key: str) -> Optional[Any]:
+    async def get(self, key: str) -> Any | None:
         try:
             result = self.conn.execute(
                 "SELECT value FROM agent_memory WHERE key = ? AND (ttl IS NULL OR created_at + (ttl * INTERVAL '1 second') > CURRENT_TIMESTAMP)",
@@ -54,8 +54,8 @@ class DuckDBMemoryProvider(BaseMemoryProvider):
             logger.error(f"Failed to get key {key}: {e}")
             return None
 
-    async def set(self, key: str, value: Any, ttl: Optional[int] = None,
-                 metadata: Optional[Dict[str, Any]] = None) -> bool:
+    async def set(self, key: str, value: Any, ttl: int | None = None,
+                 metadata: dict[str, Any] | None = None) -> bool:
         try:
             value_json = json.dumps(value) if not isinstance(value, str) else value
             metadata_json = json.dumps(metadata) if metadata else None
@@ -108,7 +108,7 @@ class DuckDBMemoryProvider(BaseMemoryProvider):
             logger.error(f"Failed to clear table: {e}")
             return False
 
-    async def keys(self) -> List[str]:
+    async def keys(self) -> list[str]:
         try:
             results = self.conn.execute(
                 "SELECT key FROM agent_memory WHERE ttl IS NULL OR created_at + (ttl * INTERVAL '1 second') > CURRENT_TIMESTAMP"
@@ -119,7 +119,7 @@ class DuckDBMemoryProvider(BaseMemoryProvider):
             logger.error(f"Failed to get keys: {e}")
             return []
 
-    async def get_metadata(self, key: str) -> Optional[Dict[str, Any]]:
+    async def get_metadata(self, key: str) -> dict[str, Any] | None:
         try:
             result = self.conn.execute(
                 "SELECT metadata FROM agent_memory WHERE key = ? AND (ttl IS NULL OR created_at + (ttl * INTERVAL '1 second') > CURRENT_TIMESTAMP)",

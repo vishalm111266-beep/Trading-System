@@ -7,12 +7,11 @@ This example shows:
 3. Configuring provider hierarchies
 4. Migration between providers
 """
-
 import asyncio
 import logging
 import sys
 from pathlib import Path
-from typing import Dict, Any
+from typing import Any
 
 # Add the project to the path
 sys_path = str(Path(__file__).resolve().parent.parent.parent)
@@ -44,7 +43,7 @@ async def basic_usage_example():
 
     # Initialize memory manager
     memory = MemoryManager(config)
-    
+
     logger.info(f"Available providers: {await memory.list_providers()}")
 
     # Store and retrieve data using default provider (ChromaDB)
@@ -53,7 +52,7 @@ async def basic_usage_example():
         "description": "Buy when price breaks above 20-day high",
         "risk_score": 0.7
     })
-    
+
     data = await memory.get("strategy_001")
     logger.info(f"Retrieved data: {data}")
 
@@ -71,10 +70,10 @@ async def basic_usage_example():
     # List all keys in each provider
     chromadb_keys = await memory.keys("chromadb")
     duckdb_keys = await memory.keys("duckdb")
-    
+
     logger.info(f"ChromaDB keys: {chromadb_keys}")
     logger.info(f"DuckDB keys: {duckdb_keys}")
-    
+
     logger.info("Basic usage example completed.\n")
 async def provider_switching_example():
     """Example 2: Switching between providers dynamically."""
@@ -162,7 +161,7 @@ async def migration_example():
 
     if success:
         logger.info("Migration successful!")
-        
+
         # Verify data in target
         keys = await target_memory.keys("chromadb")
         logger.info(f"Target now has {len(keys)} keys: {keys}")
@@ -174,7 +173,6 @@ async def agent_integration_example():
     """Example 4: Integrating with agent systems."""
     logger.info("=== Agent Integration Example ===")
 
-    from typing import Optional
 
     config = {
         "default": "agent_memory",
@@ -197,7 +195,7 @@ async def agent_integration_example():
             self.agent_id = agent_id
             self.memory = memory
 
-        async def remember(self, key: str, value: Any, ttl: Optional[int] = None) -> bool:
+        async def remember(self, key: str, value: Any, ttl: int | None = None) -> bool:
             """Remember information in agent's memory."""
             full_key = f"{self.agent_id}:{key}"
             return await self.memory.set(full_key, value, ttl=ttl)
@@ -243,7 +241,7 @@ async def agent_integration_example():
     import numpy as np
     vector = np.random.rand(4).tolist()
     await memory.set(f"{trader_agent.agent_id}:vector", vector, provider="chromadb")
-    logger.info(f"Stored vector representation")
+    logger.info("Stored vector representation")
 
     # Search for similar market conditions
     similar = await trader_agent.search_memory("high volume bullish rsi", limit=3)

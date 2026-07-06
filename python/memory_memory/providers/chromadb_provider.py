@@ -1,8 +1,8 @@
 """ChromaDB memory provider implementation."""
-
-from typing import List, Dict, Any, Optional
 import logging
-from memory_memory.base import BaseMemoryProvider, VectorMemoryProvider, MemoryEntry
+from typing import Any
+
+from memory_memory.base import VectorMemoryProvider
 
 logger = logging.getLogger(__name__)
 class ChromaDBMemoryProvider(VectorMemoryProvider):
@@ -13,7 +13,7 @@ class ChromaDBMemoryProvider(VectorMemoryProvider):
         self.collection = None
         self.collection_name = "agent_memory"
 
-    async def initialize(self, config: Dict[str, Any]) -> bool:
+    async def initialize(self, config: dict[str, Any]) -> bool:
         try:
             import chromadb
             from chromadb.config import Settings
@@ -40,7 +40,7 @@ class ChromaDBMemoryProvider(VectorMemoryProvider):
             logger.error(f"Failed to initialize ChromaDB: {e}")
             return False
 
-    async def get(self, key: str) -> Optional[Any]:
+    async def get(self, key: str) -> Any | None:
         try:
             results = self.collection.get(ids=[key])
             if results["ids"]:
@@ -50,8 +50,8 @@ class ChromaDBMemoryProvider(VectorMemoryProvider):
             logger.error(f"Failed to get key {key}: {e}")
             return None
 
-    async def set(self, key: str, value: Any, ttl: Optional[int] = None,
-                 metadata: Optional[Dict[str, Any]] = None) -> bool:
+    async def set(self, key: str, value: Any, ttl: int | None = None,
+                 metadata: dict[str, Any] | None = None) -> bool:
         try:
             if metadata is None:
                 metadata = {}
@@ -105,7 +105,7 @@ class ChromaDBMemoryProvider(VectorMemoryProvider):
             logger.error(f"Failed to clear collection: {e}")
             return False
 
-    async def keys(self) -> List[str]:
+    async def keys(self) -> list[str]:
         try:
             results = self.collection.get(limit=10000)
             return results["ids"]
@@ -113,7 +113,7 @@ class ChromaDBMemoryProvider(VectorMemoryProvider):
             logger.error(f"Failed to get keys: {e}")
             return []
 
-    async def get_metadata(self, key: str) -> Optional[Dict[str, Any]]:
+    async def get_metadata(self, key: str) -> dict[str, Any] | None:
         try:
             result = self.collection.get(ids=[key])
             if result["ids"]:
@@ -123,8 +123,8 @@ class ChromaDBMemoryProvider(VectorMemoryProvider):
             logger.error(f"Failed to get metadata for key {key}: {e}")
             return None
 
-    async def add_vector(self, key: str, vector: List[float],
-                         metadata: Optional[Dict[str, Any]] = None) -> bool:
+    async def add_vector(self, key: str, vector: list[float],
+                         metadata: dict[str, Any] | None = None) -> bool:
         try:
             if metadata is None:
                 metadata = {}
@@ -139,8 +139,8 @@ class ChromaDBMemoryProvider(VectorMemoryProvider):
             logger.error(f"Failed to add vector for key {key}: {e}")
             return False
 
-    async def query_vectors(self, query_vector: List[float],
-                           limit: int = 10) -> List[Dict[str, Any]]:
+    async def query_vectors(self, query_vector: list[float],
+                           limit: int = 10) -> list[dict[str, Any]]:
         try:
             results = self.collection.query(
                 query_embeddings=[query_vector],
@@ -166,7 +166,7 @@ class ChromaDBMemoryProvider(VectorMemoryProvider):
             logger.error(f"Failed to query vectors: {e}")
             return []
 
-    async def search(self, query: str, limit: int = 10) -> List[Dict[str, Any]]:
+    async def search(self, query: str, limit: int = 10) -> list[dict[str, Any]]:
         try:
             query_vector = self._text_to_vector(query)
             return await self.query_vectors(query_vector, limit)
@@ -174,9 +174,10 @@ class ChromaDBMemoryProvider(VectorMemoryProvider):
             logger.error(f"Failed to search: {e}")
             return []
 
-    def _text_to_vector(self, text: str) -> List[float]:
+    def _text_to_vector(self, text: str) -> list[float]:
         """Convert text to vector using simple hashing."""
         import hashlib
+
         import numpy as np
         from numpy.linalg import norm
 
