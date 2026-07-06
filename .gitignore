@@ -1,4 +1,3 @@
-cat > .gitignore << 'EOF'
 node_modules/
 __pycache__/
 *.pyc
@@ -8,4 +7,61 @@ __pycache__/
 .cache/
 dist/
 build/
-EOF
+.aider*
+examples/chromadb_data/
+.chroma/
+chromadb_data/
+# Environment & secrets
+config/*.env
+config/*.local
+config/secrets.*
+*.key
+*.pem
+# Python packaging
+*.egg-info/
+*.egg
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+htmlcov/
+.coverage
+coverage.xml
+# OS / editor
+.DS_Store
+.idea/
+*.swp
+*.swo
+*~
+# Cache & data
+.aider*
+# .opencode/  # Removed so agent files can be tracked
+.aider.chat.history.md
+# Build artefacts
+*.tgz
+backup/
+*.bak
+# Coverage files
+.coverage
+htmlcov/
+coverage.xml
+# Dangerous scripts
+fix_config.py.DANGEROUS_DO_NOT_RUN
+# Temp files
+temp_fix.json
+# Corrupted files
+*.CORRUPTED
+# Empty backup dirs
+Trading-System-backup/
+Trading-System/
+# Test files in root
+hello.py
+# Test/demo scripts
+test_fallback.py
+test_debate_integration.py
+demo_comprehensive_debate.py
+demo_debate_framework.py
+demo_debate_routing.py
+check-env.sh
+upgrade_system.sh
+# Package archives in root
+seed-ship-duckdb-mcp-native-*.tgz

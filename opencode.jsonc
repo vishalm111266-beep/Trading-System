@@ -1,0 +1,283 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "model": "nvidia/nemotron-3-super-120b-a12b",
+  "default_agent": "orchestrator",
+  "plugin": ["opencode-ntfy.sh"],
+  "provider": {
+    "nvidia": {
+      "models": {
+        "minimaxai/minimax-m3": {
+          "name": "MiniMax M3 (Multimodal)",
+          "options": { "thinking": { "type": "adaptive" } },
+          "variants": {
+            "low": { "thinking": { "type": "enabled", "budgetTokens": 4000 } },
+            "medium": { "thinking": { "type": "enabled", "budgetTokens": 16000 } },
+            "high": { "thinking": { "type": "enabled", "budgetTokens": 32000 } }
+          }
+        },
+        "deepseek-ai/deepseek-v4-pro": {
+          "name": "DeepSeek V4 Pro",
+          "options": { "thinking": { "type": "adaptive" } },
+          "variants": {
+            "low": { "thinking": { "type": "enabled", "budgetTokens": 4000 } },
+            "medium": { "thinking": { "type": "enabled", "budgetTokens": 16000 } },
+            "high": { "thinking": { "type": "enabled", "budgetTokens": 32000 } }
+          }
+        },
+        "meta/llama-3.3-70b-instruct": {
+          "name": "Llama 3.3 70B",
+          "options": { "thinking": { "type": "adaptive" } },
+          "variants": {
+            "low": { "thinking": { "type": "enabled", "budgetTokens": 4000 } },
+            "medium": { "thinking": { "type": "enabled", "budgetTokens": 16000 } },
+            "high": { "thinking": { "type": "enabled", "budgetTokens": 32000 } }
+          }
+        },
+        "nvidia/nemotron-3-super-120b-a12b": {
+          "name": "Nemotron Super 120B",
+          "options": { "thinking": { "type": "adaptive" } },
+          "variants": {
+            "low": { "thinking": { "type": "enabled", "budgetTokens": 4000 } },
+            "medium": { "thinking": { "type": "enabled", "budgetTokens": 16000 } },
+            "high": { "thinking": { "type": "enabled", "budgetTokens": 32000 } }
+          }
+        },
+        "nvidia/nemotron-mini-4b-instruct": {
+          "name": "Nemotron Mini 4B (Fast)",
+          "options": { "thinking": { "type": "adaptive" } },
+          "variants": {
+            "low": { "thinking": { "type": "enabled", "budgetTokens": 4000 } },
+            "medium": { "thinking": { "type": "enabled", "budgetTokens": 16000 } },
+            "high": { "thinking": { "type": "enabled", "budgetTokens": 32000 } }
+          }
+        }
+      }
+    },
+    "google": {
+      "models": {
+        "google/gemini-1.5-pro": {
+          "name": "Gemini 1.5 Pro",
+          "options": { "thinking": { "type": "adaptive" } },
+          "variants": {
+            "low": { "thinking": { "type": "enabled", "budgetTokens": 4000 } },
+            "medium": { "thinking": { "type": "enabled", "budgetTokens": 16000 } },
+            "high": { "thinking": { "type": "enabled", "budgetTokens": 32000 } }
+          }
+        },
+        "google/gemini-1.0-pro": {
+          "name": "Gemini 1.0 Pro",
+          "options": { "thinking": { "type": "adaptive" } },
+          "variants": {
+            "low": { "thinking": { "type": "enabled", "budgetTokens": 4000 } },
+            "medium": { "thinking": { "type": "enabled", "budgetTokens": 16000 } },
+            "high": { "thinking": { "type": "enabled", "budgetTokens": 32000 } }
+          }
+        }
+      }
+    }
+  },
+  "mcp": {
+    "filesystem": {
+      "type": "local",
+      "command": ["npx", "-y", "@modelcontextprotocol/server-filesystem", "/root/Projects/Trading-System"],
+      "enabled": true
+    },
+    "playwright": {
+      "type": "local",
+      "command": ["npx", "-y", "@playwright/mcp@latest", "--headless", "--browser", "chromium"],
+      "env": { "PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH": "/root/.cache/chromium/usr/lib/chromium/chromium" },
+      "enabled": true
+    },
+    "brightdata": {
+      "type": "local",
+      "command": ["npx", "-y", "@brightdata/mcp"],
+      "env": { "API_TOKEN": "", "PRO_MODE": "true", "GROUPS": "browser,advanced_scraping,ecommerce,social" },
+      "enabled": false,
+      "note": "Requires BRIGHTDATA_API_TOKEN env var"
+    },
+    "youtube": {
+      "type": "local",
+      "command": ["npx", "-y", "@kimtaeyoon83/mcp-server-youtube-transcript"],
+      "enabled": true
+    },
+    "youtube-summarizer": {
+      "type": "local",
+      "command": ["python3", "/root/Projects/Trading-System/.opencode/mcp-servers/youtube-summarizer-mcp.py"],
+      "enabled": true
+    },
+    "github": {
+      "type": "remote",
+      "url": "https://api.githubcopilot.com/mcp/",
+      "enabled": true,
+      "oauth": false,
+      "headers": {
+        "Authorization": "Bearer {env:GITHUB_PERSONAL_ACCESS_TOKEN}"
+      }
+    }
+  },
+  "agent": {
+    "build": {
+      "mode": "primary",
+      "description": "Full development agent with thinking enabled",
+      "model": "deepseek-ai/deepseek-v4-pro",
+      "thinking": { "type": "disabled", "budgetTokens": 16000 },
+      "permission": { "edit": "allow", "bash": "allow", "task": { "*": "allow" } }
+    },
+    "plan": {
+      "mode": "primary",
+      "description": "Read-only planning with deep thinking",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "thinking": { "type": "disabled", "budgetTokens": 24000 },
+      "permission": { "edit": "deny", "bash": "deny", "task": { "*": "allow" } }
+    },
+    "ultrathink": {
+      "description": "Maximum thinking agent for complex problems",
+      "mode": "primary",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "thinking": { "type": "disabled", "budgetTokens": 100000 },
+      "permission": { "edit": "allow", "bash": "allow", "task": { "*": "allow" } }
+    },
+    "orchestrator": {
+      "description": "Auto-router: detects query intent and delegates to specialist agents. Use as default.",
+      "mode": "primary",
+      "model": "nvidia/nemotron-mini-4b-instruct",
+      "thinking": { "type": "enabled", "budgetTokens": 16000 },
+      "permission": { "edit": "deny", "bash": "deny", "task": { "*": "allow" } }
+    },
+    "fixer": {
+      "description": "TRIGGER: quick implementation, fast code, simple task, small change, minor fix, quick update, default fallback for any task",
+      "mode": "all",
+      "model": "nvidia/nemotron-mini-4b-instruct",
+      "thinking": { "type": "disabled", "budgetTokens": 8000 },
+      "permission": { "edit": "allow", "bash": "allow" }
+    },
+    "deep-thinker": {
+      "description": "TRIGGER: complex analysis, deep thinking, critical analysis, algorithmic thinking, mathematical proof, logic puzzle, complex debugging",
+      "mode": "all",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "thinking": { "type": "disabled", "budgetTokens": 50000 },
+      "permission": { "edit": "allow", "bash": "allow" }
+    },
+    "elite-coder": {
+      "description": "TRIGGER: production code, critical code, high quality code, performance code, optimized code, enterprise code, best practices code",
+      "mode": "all",
+      "model": "deepseek-ai/deepseek-v4-pro",
+      "thinking": { "type": "disabled", "budgetTokens": 24000 },
+      "permission": { "edit": "allow", "bash": "allow" }
+    },
+    "fast-planner": {
+      "description": "TRIGGER: quick plan, task breakdown, simple planning, todo list, step by step, action plan, simple roadmap",
+      "mode": "all",
+      "model": "nvidia/nemotron-mini-4b-instruct",
+      "thinking": { "type": "disabled", "budgetTokens": 4000 },
+      "permission": { "edit": "deny", "bash": "deny" }
+    },
+    "gemini-thinker": {
+      "description": "TRIGGER: Gemini thinking, Google AI analysis, multi-model comparison, alternative perspective, Gemini reasoning",
+      "mode": "all",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "thinking": { "type": "disabled", "budgetTokens": 20000 },
+      "permission": { "edit": "allow", "bash": "allow" }
+    },
+    "general": {
+      "mode": "all",
+      "description": "TRIGGER: general task, miscellaneous, multi-purpose, general question, general help, general coding",
+      "model": "meta/llama-3.3-70b-instruct",
+      "thinking": { "type": "disabled", "budgetTokens": 8000 }
+    },
+    "explore": {
+      "mode": "all",
+      "description": "TRIGGER: explore codebase, find files, search code, code structure, understand codebase, grep search, file search",
+      "model": "meta/llama-3.3-70b-instruct",
+      "thinking": { "type": "disabled", "budgetTokens": 4000 }
+    },
+    "scout": {
+      "mode": "all",
+      "description": "TRIGGER: external docs, library documentation, API reference, official docs, package docs, npm docs, PyPI docs",
+      "model": "minimaxai/minimax-m3",
+      "thinking": { "type": "disabled", "budgetTokens": 8000 }
+    },
+    "trading-research": {
+      "description": "TRIGGER: market data, stock prices, crypto prices, forex, market analysis, price trends, support resistance, technical analysis, fundamentals, earnings, economic data",
+      "mode": "all",
+      "model": "minimaxai/minimax-m3",
+      "thinking": { "type": "disabled", "budgetTokens": 12000 },
+      "permission": { 
+        "edit": "deny", 
+        "bash": "deny", 
+        "webfetch": "allow", 
+        "websearch": "allow" 
+      }
+    },
+    "trading-strategy": {
+      "description": "TRIGGER: trading strategy, algo trading, backtesting, signal generation, entry exit rules, strategy development, systematic trading, quantitative strategy",
+      "mode": "all",
+      "model": "meta/llama-3.3-70b-instruct",
+      "thinking": { "type": "disabled", "budgetTokens": 16000 },
+      "permission": { "edit": "allow", "bash": "allow" }
+    },
+    "trading-risk": {
+      "description": "TRIGGER: risk management, position sizing, stop loss, risk assessment, portfolio risk, VaR, drawdown, risk limits, exposure management",
+      "mode": "all",
+      "model": "meta/llama-3.3-70b-instruct",
+      "thinking": { "type": "disabled", "budgetTokens": 12000 },
+      "permission": { "edit": "deny", "bash": "allow" }
+    },
+    "agent": {
+      "description": "TRIGGER: general agent, misc task, help, ask me anything, general question, quick help",
+      "mode": "all",
+      "model": "meta/llama-3.3-70b-instruct",
+      "thinking": { "type": "enabled", "budgetTokens": 8000 },
+      "permission": { "edit": "allow", "bash": "allow" }
+    },
+    "opencode-manager": {
+      "description": "TRIGGER: opencode config, manage agents, MCP servers, skills, opencode setup, configure opencode",
+      "mode": "all",
+      "model": "nvidia/nemotron-mini-4b-instruct",
+      "thinking": { "type": "enabled", "budgetTokens": 8000 },
+      "permission": { "edit": "allow", "bash": "allow" }
+    },
+    "trading-execution": {
+      "description": "TRIGGER: trade execution, order placement, buy sell orders, market order, limit order, order management, slippage, execution quality",
+      "mode": "all",
+      "model": "nvidia/nemotron-mini-4b-instruct",
+      "thinking": { "type": "disabled", "budgetTokens": 4000 },
+      "permission": { "edit": "allow", "bash": "allow" }
+    },
+    "trading-monitor": {
+      "description": "TRIGGER: system monitoring, portfolio monitoring, alerts, system health, uptime, performance monitoring, dashboard, real-time data",
+      "mode": "all",
+      "model": "nvidia/nemotron-mini-4b-instruct",
+      "thinking": { "type": "disabled", "budgetTokens": 4000 },
+      "permission": { "edit": "deny", "bash": "allow" }
+    },
+    "trading-report": {
+      "description": "TRIGGER: performance report, PnL analysis, trade history, profit loss, returns, Sharpe ratio, portfolio performance, metrics",
+      "mode": "all",
+      "model": "minimaxai/minimax-m3",
+      "thinking": { "type": "disabled", "budgetTokens": 8000 },
+      "permission": { "edit": "allow", "bash": "deny" }
+    },
+    "youtube-summarizer": {
+      "description": "TRIGGER: summarize youtube video, youtube summary, video summary, what is this video about, quick video recap. Uses multi-layer fallback (captions→Whisper→Gemini) for transcript + LLM summarization.",
+      "mode": "all",
+      "model": "minimaxai/minimax-m3",
+      "thinking": { "type": "disabled", "budgetTokens": 8000 },
+      "permission": { "edit": "deny", "bash": "deny" }
+    },
+    "youtube-analyst": {
+      "description": "TRIGGER: deep dive youtube, analyze video, video insights, extract trading signals from video, youtube research, video content analysis. Deep analysis using summarize_youtube MCP with multi-layer fallback.",
+      "mode": "all",
+      "model": "meta/llama-3.3-70b-instruct",
+      "thinking": { "type": "disabled", "budgetTokens": 16000 },
+      "permission": { "edit": "deny", "bash": "deny" }
+    },
+    "youtube-transcriber": {
+      "description": "TRIGGER: get transcript, download transcript, youtube captions, video text, extract subtitles, transcript with timestamps. Fetches and formats YouTube video transcripts with language and timestamp options.",
+      "mode": "all",
+      "model": "nvidia/nemotron-mini-4b-instruct",
+      "thinking": { "type": "disabled", "budgetTokens": 4000 },
+      "permission": { "edit": "deny", "bash": "deny" }
+    }
+  }
+}
