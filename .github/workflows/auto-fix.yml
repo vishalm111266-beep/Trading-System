@@ -42,7 +42,7 @@ jobs:
           find . -name "*.py" -not -path "./.opencode/node_modules/*" -exec reorder-python-imports {} \; 2>/dev/null || true
 
       - name: Commit fixes
-        uses: stefanzweifel/git-auto-commit-action@v5
+        uses: stefanzweifel/git-auto-commit-action@v7
         with:
           commit_message: "🤖 auto-fix: linting and formatting"
           commit_user_name: "github-autopilot[bot]"
