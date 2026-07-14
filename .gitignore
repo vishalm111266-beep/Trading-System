@@ -1,0 +1,62 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg-info/
+dist/
+build/
+.eggs/
+*.egg
+
+# Virtual environments
+venv/
+.venv/
+env/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Data (large files, fetched at runtime)
+data/*.csv
+data/*.db
+data/*.sqlite
+data/*.parquet
+
+# Reports (generated output)
+reports/*.html
+reports/*.pdf
+reports/*.csv
+
+# Logs
+*.log
+logs/
+
+# Secrets
+.env
+.env.*
+credentials/
+*.key
+*.pem
+
+# Termux/Proot
+.proot/
+*.tmp
+
+# Coverage
+htmlcov/
+.coverage
+coverage.xml
+
+# Test artifacts
+.pytest_cache/
+.tox/
+.nox/
