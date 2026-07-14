@@ -1,6 +1,12 @@
 market_data:
   default_source: csv
   cache_dir: data/cache
+  storage_dir: data/storage
+
+  retry:
+    max_attempts: 3
+    delay: 1.0
+    backoff: 2.0
 
   csv:
     base_dir: data/csv
