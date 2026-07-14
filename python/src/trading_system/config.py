@@ -1,7 +1,5 @@
 from pathlib import Path
 
-from trading_system import __version__
-
 PROJECT_ROOT = Path(__file__).resolve().parents[3]
 CONFIG_DIR = PROJECT_ROOT / "config"
 DATA_DIR = PROJECT_ROOT / "data"
