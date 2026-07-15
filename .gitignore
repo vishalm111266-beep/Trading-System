@@ -9,7 +9,7 @@ build/
 .eggs/
 *.egg
 
-# Virtual environments
+# Virtual environments (DON'T track on phone)
 venv/
 .venv/
 env/
@@ -25,16 +25,22 @@ env/
 .DS_Store
 Thumbs.db
 
-# Data (large files, fetched at runtime)
+# Data files -> stored via Git LFS on GitHub, NOT on phone
 data/*.csv
 data/*.db
 data/*.sqlite
 data/*.parquet
+data/*.h5
+data/*.hdf5
+data/*.pkl
+data/cache/
+data/storage/
 
-# Reports (generated output)
+# Reports (generated, push to GitHub then delete locally)
 reports/*.html
 reports/*.pdf
 reports/*.csv
+reports/*.json
 
 # Logs
 *.log
@@ -60,3 +66,12 @@ coverage.xml
 .pytest_cache/
 .tox/
 .nox/
+
+# Git LFS cache (auto-managed)
+.git/lfs/
+
+# Phone storage optimization - cleanup targets
+*.bak
+*.old
+*.orig
+node_modules/
