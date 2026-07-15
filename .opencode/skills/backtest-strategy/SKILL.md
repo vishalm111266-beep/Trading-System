@@ -1,6 +1,9 @@
-# Backtest Strategy Skill
+---
+name: backtest-strategy
+description: Run backtests on trading strategies. Use when user says "backtest [STRATEGY]", "run backtest", or "test strategy".
+---
 
-Trigger when user says: "backtest [STRATEGY]", "run backtest", "test strategy"
+# Backtest Strategy Skill
 
 ## Pipeline
 1. @strategy-developer → define strategy rules

@@ -1,6 +1,9 @@
-# Analyze Stock Skill
+---
+name: analyze-stock
+description: Full multi-agent stock analysis combining technical, fundamental, sentiment, and risk. Use when user says "analyze [STOCK]", "analysis of [STOCK]", or "what do you think about [STOCK]".
+---
 
-Trigger when user says: "analyze [STOCK]", "analysis of [STOCK]", "what do you think about [STOCK]"
+# Analyze Stock Skill
 
 ## Pipeline
 1. @technical-analyst → price action, indicators, signals
