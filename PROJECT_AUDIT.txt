@@ -1,0 +1,376 @@
+===== PROJECT ROOT =====
+/root/Projects/Trading-System
+
+===== DIRECTORY TREE =====
+.
+|-- .editorconfig
+|-- .git
+|   |-- COMMIT_EDITMSG
+|   |-- HEAD
+|   |-- config
+|   |-- description
+|   |-- hooks
+|   |   |-- applypatch-msg.sample
+|   |   |-- commit-msg.sample
+|   |   |-- fsmonitor-watchman.sample
+|   |   |-- post-update.sample
+|   |   |-- pre-applypatch.sample
+|   |   |-- pre-commit.sample
+|   |   |-- pre-merge-commit.sample
+|   |   |-- pre-push.sample
+|   |   |-- pre-rebase.sample
+|   |   |-- pre-receive.sample
+|   |   |-- prepare-commit-msg.sample
+|   |   |-- push-to-checkout.sample
+|   |   |-- sendemail-validate.sample
+|   |   `-- update.sample
+|   |-- index
+|   |-- info
+|   |   `-- exclude
+|   |-- logs
+|   |   |-- HEAD
+|   |   `-- refs
+|   |-- objects
+|   |   |-- 00
+|   |   |-- 02
+|   |   |-- 06
+|   |   |-- 07
+|   |   |-- 0a
+|   |   |-- 0b
+|   |   |-- 0e
+|   |   |-- 11
+|   |   |-- 14
+|   |   |-- 16
+|   |   |-- 18
+|   |   |-- 1e
+|   |   |-- 1f
+|   |   |-- 21
+|   |   |-- 22
+|   |   |-- 23
+|   |   |-- 25
+|   |   |-- 26
+|   |   |-- 28
+|   |   |-- 29
+|   |   |-- 2a
+|   |   |-- 2b
+|   |   |-- 2c
+|   |   |-- 2d
+|   |   |-- 2f
+|   |   |-- 32
+|   |   |-- 35
+|   |   |-- 36
+|   |   |-- 3a
+|   |   |-- 3b
+|   |   |-- 3c
+|   |   |-- 3e
+|   |   |-- 3f
+|   |   |-- 41
+|   |   |-- 43
+|   |   |-- 44
+|   |   |-- 45
+|   |   |-- 46
+|   |   |-- 47
+|   |   |-- 48
+|   |   |-- 49
+|   |   |-- 4a
+|   |   |-- 4b
+|   |   |-- 4c
+|   |   |-- 4d
+|   |   |-- 4f
+|   |   |-- 50
+|   |   |-- 51
+|   |   |-- 53
+|   |   |-- 55
+|   |   |-- 57
+|   |   |-- 58
+|   |   |-- 5e
+|   |   |-- 63
+|   |   |-- 66
+|   |   |-- 67
+|   |   |-- 6a
+|   |   |-- 6b
+|   |   |-- 6c
+|   |   |-- 6f
+|   |   |-- 70
+|   |   |-- 71
+|   |   |-- 73
+|   |   |-- 78
+|   |   |-- 79
+|   |   |-- 7a
+|   |   |-- 7c
+|   |   |-- 7e
+|   |   |-- 80
+|   |   |-- 84
+|   |   |-- 85
+|   |   |-- 86
+|   |   |-- 89
+|   |   |-- 8a
+|   |   |-- 8b
+|   |   |-- 8e
+|   |   |-- 92
+|   |   |-- 94
+|   |   |-- 95
+|   |   |-- 97
+|   |   |-- 98
+|   |   |-- 9b
+|   |   |-- 9c
+|   |   |-- 9d
+|   |   |-- 9e
+|   |   |-- 9f
+|   |   |-- a1
+|   |   |-- a2
+|   |   |-- a3
+|   |   |-- a6
+|   |   |-- a8
+|   |   |-- aa
+|   |   |-- b0
+|   |   |-- b1
+|   |   |-- b2
+|   |   |-- b5
+|   |   |-- b6
+|   |   |-- b8
+|   |   |-- b9
+|   |   |-- bc
+|   |   |-- be
+|   |   |-- bf
+|   |   |-- c2
+|   |   |-- c4
+|   |   |-- c6
+|   |   |-- c9
+|   |   |-- cc
+|   |   |-- cf
+|   |   |-- d0
+|   |   |-- d1
+|   |   |-- d3
+|   |   |-- d6
+|   |   |-- d8
+|   |   |-- d9
+|   |   |-- da
+|   |   |-- dc
+|   |   |-- de
+|   |   |-- e0
+|   |   |-- e3
+|   |   |-- e4
+|   |   |-- e5
+|   |   |-- e6
+|   |   |-- e7
+|   |   |-- eb
+|   |   |-- ed
+|   |   |-- f2
+|   |   |-- f3
+|   |   |-- f4
+|   |   |-- f6
+|   |   |-- f7
+|   |   |-- f8
+|   |   |-- fa
+|   |   |-- fb
+|   |   |-- fc
+|   |   |-- fd
+|   |   |-- fe
+|   |   |-- info
+|   |   `-- pack
+|   |-- opencode
+|   `-- refs
+|       |-- heads
+|       `-- tags
+|-- .gitignore
+|-- .pre-commit-config.yaml
+|-- .python-version
+|-- .venv
+|   |-- .gitignore
+|   |-- .lock
+|   |-- CACHEDIR.TAG
+|   |-- bin
+|   |   |-- activate
+|   |   |-- activate.bat
+|   |   |-- activate.csh
+|   |   |-- activate.fish
+|   |   |-- activate.nu
+|   |   |-- activate.ps1
+|   |   |-- activate_this.py
+|   |   |-- deactivate.bat
+|   |   |-- py.test
+|   |   |-- pydoc.bat
+|   |   |-- pygmentize
+|   |   |-- pytest
+|   |   |-- python -> /usr/bin/python3.14
+|   |   |-- python3 -> python
+|   |   |-- python3.14 -> python
+|   |   `-- ruff
+|   |-- lib
+|   |   `-- python3.14
+|   |-- lib64 -> lib
+|   `-- pyvenv.cfg
+|-- AGENTS.md
+|-- CHANGELOG.md
+|-- DECISIONS.md
+|-- FOUNDATION.md
+|-- LICENSE
+|-- PROJECT_AUDIT.txt
+|-- README.md
+|-- ROADMAP.md
+|-- WORKFLOW.md
+|-- bootstrap.sh
+|-- config
+|   |-- data.yaml
+|   |-- logging.yaml
+|   |-- models
+|   |-- templates
+|   `-- workflows
+|-- data
+|-- docs
+|   |-- architecture
+|   |-- guides
+|   |-- reference
+|   `-- setup
+|-- install.sh
+|-- opencode.jsonc
+|-- pine
+|   |-- indicators
+|   |-- libraries
+|   `-- strategies
+|-- pyproject.toml
+|-- python
+|   |-- backtests
+|   |-- data
+|   |-- indicators
+|   |-- src
+|   |   `-- trading_system
+|   |-- strategies
+|   `-- utils
+|-- reports
+|-- requirements.txt
+|-- research
+|   |-- active
+|   |-- archive
+|   |-- findings
+|   |-- sources
+|   `-- templates
+|-- scripts
+|   |-- backup
+|   |-- setup
+|   |-- update
+|   `-- utils
+|-- tests
+|   |-- backtests
+|   |-- integration
+|   `-- unit
+|       |-- __init__.py
+|       |-- data
+|       |-- indicators
+|       |-- portfolio
+|       |-- scanner
+|       `-- strategies
+`-- uv.lock
+
+196 directories, 64 files
+
+===== PYTHON FILES =====
+python/src/trading_system/__init__.py
+python/src/trading_system/backtest/__init__.py
+python/src/trading_system/config.py
+python/src/trading_system/constants.py
+python/src/trading_system/data/__init__.py
+python/src/trading_system/data/cache.py
+python/src/trading_system/data/datasource.py
+python/src/trading_system/data/downloader.py
+python/src/trading_system/data/exceptions.py
+python/src/trading_system/data/loader.py
+python/src/trading_system/data/provider.py
+python/src/trading_system/data/retry.py
+python/src/trading_system/data/session.py
+python/src/trading_system/data/storage.py
+python/src/trading_system/data/validator.py
+python/src/trading_system/indicators/__init__.py
+python/src/trading_system/indicators/mansfield_rs.py
+python/src/trading_system/indicators/moving_average.py
+python/src/trading_system/indicators/normalization.py
+python/src/trading_system/indicators/ranking.py
+python/src/trading_system/indicators/relative_strength.py
+python/src/trading_system/models/__init__.py
+python/src/trading_system/models/candle.py
+python/src/trading_system/models/market_data.py
+python/src/trading_system/models/ranking_result.py
+python/src/trading_system/models/rs_signal.py
+python/src/trading_system/models/symbol.py
+python/src/trading_system/portfolio/__init__.py
+python/src/trading_system/portfolio/allocation.py
+python/src/trading_system/portfolio/portfolio.py
+python/src/trading_system/portfolio/position.py
+python/src/trading_system/portfolio/risk.py
+python/src/trading_system/portfolio/sizing.py
+python/src/trading_system/reports/__init__.py
+python/src/trading_system/scanner/__init__.py
+python/src/trading_system/scanner/filters.py
+python/src/trading_system/scanner/pipeline.py
+python/src/trading_system/scanner/result.py
+python/src/trading_system/scanner/scanner.py
+python/src/trading_system/services/__init__.py
+python/src/trading_system/strategies/__init__.py
+python/src/trading_system/strategies/base.py
+python/src/trading_system/strategies/evaluator.py
+python/src/trading_system/strategies/rules.py
+python/src/trading_system/strategies/signal.py
+python/src/trading_system/testsupport/__init__.py
+python/src/trading_system/utils/__init__.py
+
+===== TEST FILES =====
+tests/unit/__init__.py
+tests/unit/data/__init__.py
+tests/unit/data/test_cache.py
+tests/unit/data/test_downloader.py
+tests/unit/data/test_loader.py
+tests/unit/data/test_provider.py
+tests/unit/data/test_retry.py
+tests/unit/data/test_storage.py
+tests/unit/data/test_validator.py
+tests/unit/indicators/__init__.py
+tests/unit/indicators/test_mansfield_rs.py
+tests/unit/indicators/test_moving_average.py
+tests/unit/indicators/test_normalization.py
+tests/unit/indicators/test_ranking.py
+tests/unit/indicators/test_relative_strength.py
+tests/unit/portfolio/test_allocation.py
+tests/unit/portfolio/test_portfolio.py
+tests/unit/portfolio/test_position.py
+tests/unit/portfolio/test_risk.py
+tests/unit/portfolio/test_sizing.py
+tests/unit/scanner/test_filters.py
+tests/unit/scanner/test_pipeline.py
+tests/unit/scanner/test_scanner.py
+tests/unit/strategies/test_evaluator.py
+tests/unit/strategies/test_rules.py
+tests/unit/strategies/test_signal.py
+
+===== CONFIG FILES =====
+./.pre-commit-config.yaml
+./.venv/lib/python3.14/site-packages/ruff-0.15.21.dist-info/sboms/ruff.cyclonedx.json
+./config/data.yaml
+./config/logging.yaml
+./opencode.jsonc
+./pyproject.toml
+
+===== MARKDOWN =====
+./AGENTS.md
+./CHANGELOG.md
+./DECISIONS.md
+./FOUNDATION.md
+./README.md
+./ROADMAP.md
+./WORKFLOW.md
+
+===== GIT HISTORY =====
+* de1cc88 (HEAD -> main) build: implement portfolio engine
+* eda70ca build: implement strategy engine
+* b95c454 style: format imports
+* f262fd6 build: implement relative strength scanner
+* 9b6096a build: implement relative strength engine
+* 58e71f0 build: create data provider engine
+* da46622 build: create market data foundation
+* ccc98da build: create trading system package architecture
+* 2606925 fix: remove unused import
+* da974e3 build: create development foundation
+* 4368bf9 chore: remove accidental file
+* 2bda4b6 build: configure uv project
+* ed6c3b8 build: configure python 3.14 environment
+* a240648 chore: initialize project foundation
