@@ -57,6 +57,9 @@ credentials/
 .proot/
 *.tmp
 
+# Generated outputs — never commit (go to workspace/, push to cloud separately)
+workspace/
+
 # Coverage
 htmlcov/
 .coverage
@@ -74,4 +77,6 @@ coverage.xml
 *.bak
 *.old
 *.orig
+# Cache
+.ruff_cache/
 node_modules/

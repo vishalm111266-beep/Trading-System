@@ -5,8 +5,27 @@ runtime = [
 ]
 dev = [
     "pytest>=8.0,<9",
+    "pytest-cov>=6.0,<7",
     "ruff>=0.12,<1",
 ]
+
+[tool.coverage.run]
+source = ["trading_system"]
+branch = true
+omit = ["*/tests/*", "*/.venv/*", "*/__pycache__/*"]
+
+[tool.coverage.report]
+show_missing = true
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "raise NotImplementedError",
+    "if TYPE_CHECKING:",
+]
+fail_under = 50
+
+[tool.coverage.html]
+directory = "htmlcov"
 
 [tool.uv]
 package = false

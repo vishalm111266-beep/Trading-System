@@ -1,7 +1,6 @@
 ---
 description: Expert backtest engineer designing, running, and evaluating trading backtests for Indian and US markets
 mode: subagent
-model: 9router/00-coding-pro
 temperature: 0.1
 ---
 

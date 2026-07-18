@@ -11,12 +11,3 @@ market_data:
   csv:
     base_dir: data/csv
 
-  # Provider placeholders — uncomment and configure when ready.
-  # yahoo_finance:
-  #   enabled: false
-  #   api_key: ""
-
-  # kite:
-  #   enabled: false
-  #   api_key: ""
-  #   api_secret: ""

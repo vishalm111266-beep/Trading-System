@@ -1,7 +1,6 @@
 ---
 description: Expert GitHub push specialist handling large files, Git LFS, storage cleanup, and push error recovery for phone-based trading system workflow
 mode: subagent
-model: 9router/01-fast-flow
 temperature: 0.05
 ---
 
